@@ -1,22 +1,5 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from datetime import datetime
-import os
-
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-# app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///budget_tracker.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-@app.route("/")
-def home():
-    return "<h1>This is Budget_tracker api</h1>"
-
+from . import db
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -67,22 +50,18 @@ class Notification(db.Model):
     __tablename__ = 'notifications'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    category = db.Column(db.String(50), nullable=False) 
+    category = db.Column(db.String(50), nullable=False)
     message = db.Column(db.Text, nullable=False)
     date_sent = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(20), default="pending")  
+    status = db.Column(db.String(20), default="pending")
 
 
 class MonthlySummary(db.Model):
     __tablename__ = 'monthly_summaries'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    month = db.Column(db.Date, nullable=False)  
+    month = db.Column(db.Date, nullable=False)
     total_expenses = db.Column(db.Numeric, nullable=False)
-    total_income = db.Column(db.Numeric, nullable=True)  
-    savings_rate = db.Column(db.Numeric, nullable=True)  
-    budget_variance = db.Column(db.Numeric, nullable=True) 
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    total_income = db.Column(db.Numeric, nullable=True)
+    savings_rate = db.Column(db.Numeric, nullable=True)
+    budget_variance = db.Column(db.Numeric, nullable=True)
