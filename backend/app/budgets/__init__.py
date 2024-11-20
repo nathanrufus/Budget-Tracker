@@ -1,6 +1,5 @@
 from flask import Blueprint
-from routes.budgets import budget_blueprint
+from budgets.controllers import budget_blueprint
 
-# Centralized blueprint management
-def register_blueprints(app):
-    app.register_blueprint(budget_blueprint, url_prefix="/api")
+def register_budget_blueprint(app):
+    app.register_blueprint(budget_blueprint, url_prefix="/api/budgets")
