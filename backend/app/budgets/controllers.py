@@ -1,66 +1,80 @@
-from flask import Blueprint, jsonify, request
-from app.models import db
-from budgets.models import Budget
-from utils.serializers import serialize_budget
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from app import db
+from .models import Budget
 from datetime import datetime
 
-budget_blueprint = Blueprint("budgets", __name__)
+# Parsers for input validation
+budget_parser = reqparse.RequestParser()
+budget_parser.add_argument("category", type=str, required=True, help="Category is required.")
+budget_parser.add_argument("amount", type=float, required=True, help="Amount is required.")
+budget_parser.add_argument("start_date", type=lambda x: datetime.strptime(x, "%Y-%m-%d"), required=True, help="Start date is required in YYYY-MM-DD format.")
+budget_parser.add_argument("end_date", type=lambda x: datetime.strptime(x, "%Y-%m-%d"), required=True, help="End date is required in YYYY-MM-DD format.")
 
-@budget_blueprint.route("/", methods=["POST"])
-def create_budget():
-    """Create a new budget entry."""
-    data = request.json
-    try:
+
+update_budget_parser = reqparse.RequestParser()
+update_budget_parser.add_argument("category", type=str, required=False)
+update_budget_parser.add_argument("amount", type=float, required=False)
+update_budget_parser.add_argument("start_date", type=lambda x: datetime.strptime(x, "%Y-%m-%d"), required=False)
+update_budget_parser.add_argument("end_date", type=lambda x: datetime.strptime(x, "%Y-%m-%d"), required=False)
+
+class BudgetListAPI(Resource):
+    @jwt_required()
+    def get(self):
+        """Retrieve all budgets."""
+        user_id = get_jwt_identity()
+        budgets = Budget.query.filter_by(user_id=user_id).all()
+        return {"budgets": [budget.serialize() for budget in budgets]}, 200
+
+    @jwt_required()
+    def post(self):
+        """Create a new budget entry."""
+        args = budget_parser.parse_args()  
+        user_id = get_jwt_identity()
         new_budget = Budget(
-            user_id=data["user_id"],
-            category=data["category"],
-            amount=data["amount"],
-            start_date=datetime.strptime(data["start_date"], "%Y-%m-%d"),
-            end_date=datetime.strptime(data["end_date"], "%Y-%m-%d"),
+            user_id=user_id,
+            category=args["category"],
+            amount=args["amount"],
+            start_date=args["start_date"],
+            end_date=args["end_date"]
         )
         db.session.add(new_budget)
         db.session.commit()
-        return jsonify({"message": "Budget created successfully", "budget": serialize_budget(new_budget)}), 201
-    except KeyError as e:
-        return jsonify({"error": f"Missing field: {str(e)}"}), 400
-    except Exception as e:
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        return {"message": "Budget created successfully", "budget": new_budget.serialize()}, 201
 
 
-@budget_blueprint.route("/", methods=["GET"])
-def get_budgets():
-    """Get all budgets."""
-    budgets = Budget.query.all()
-    return jsonify([serialize_budget(budget) for budget in budgets]), 200
+class BudgetAPI(Resource):
+    @jwt_required()
+    def get(self, budget_id):
+        """Retrieve a specific budget by ID."""
+        user_id = get_jwt_identity()
+        budget = Budget.query.filter_by(id=budget_id, user_id=user_id).first_or_404()
+        return {"budget": budget.serialize()}, 200
 
+    @jwt_required()
+    def put(self, budget_id):
+        """Update an existing budget."""
+        args = update_budget_parser.parse_args()
+        user_id = get_jwt_identity()
+        budget = Budget.query.filter_by(id=budget_id, user_id=user_id).first_or_404()
 
-@budget_blueprint.route("/<int:budget_id>", methods=["GET"])
-def get_budget(budget_id):
-    """Get a budget by ID."""
-    budget = Budget.query.get_or_404(budget_id)
-    return jsonify(serialize_budget(budget)), 200
+        if args["category"] is not None:
+            budget.category = args["category"]
+        if args["amount"] is not None:
+            budget.amount = args["amount"]
+        if args["start_date"] is not None:
+            budget.start_date = args["start_date"]
+        if args["end_date"] is not None:
+            budget.end_date = args["end_date"]
 
-
-@budget_blueprint.route("/<int:budget_id>", methods=["PUT"])
-def update_budget(budget_id):
-    """Update an existing budget."""
-    budget = Budget.query.get_or_404(budget_id)
-    data = request.json
-    try:
-        budget.category = data.get("category", budget.category)
-        budget.amount = data.get("amount", budget.amount)
-        budget.start_date = datetime.strptime(data.get("start_date", str(budget.start_date)), "%Y-%m-%d")
-        budget.end_date = datetime.strptime(data.get("end_date", str(budget.end_date)), "%Y-%m-%d")
         db.session.commit()
-        return jsonify({"message": "Budget updated successfully", "budget": serialize_budget(budget)}), 200
-    except Exception as e:
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 400
+        return {"message": "Budget updated successfully", "budget": budget.serialize()}, 200
 
-
-@budget_blueprint.route("/<int:budget_id>", methods=["DELETE"])
-def delete_budget(budget_id):
-    """Delete a budget."""
-    budget = Budget.query.get_or_404(budget_id)
-    db.session.delete(budget)
-    db.session.commit()
-    return jsonify({"message": f"Budget {budget_id} deleted successfully"}), 200
+    @jwt_required()
+    def delete(self, budget_id):
+        """Delete a specific budget."""
+        user_id = get_jwt_identity()
+        budget = Budget.query.filter_by(id=budget_id, user_id=user_id).first_or_404()
+        db.session.delete(budget)
+        db.session.commit()
+        return {"message": f"Budget {budget_id} deleted successfully"}, 200

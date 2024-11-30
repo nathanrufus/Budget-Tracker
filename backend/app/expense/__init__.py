@@ -1,5 +1,13 @@
-from expense.controllers import expense_bluerprint
 from flask import Blueprint
+from flask_restful import Api
+from .controllers import ExpenseListAPI,ExpenseAPI
 
-def register_expense_blueprint(run):
-    run.register_blueprint(expense_bluerprint, url_prefix="/api/expenses")
+
+# Initialize the blueprint
+expense_bp = Blueprint('expense', __name__)
+api = Api(expense_bp)
+
+# Register the resources with their endpoints
+api.add_resource(ExpenseListAPI, '/expense')
+
+

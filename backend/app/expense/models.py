@@ -2,6 +2,7 @@ from app import db
 
 class Expense(db.Model):
     __tablename__ = "expenses"
+    # __table_args__ = {"extend_existing": True} 
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
@@ -20,3 +21,6 @@ class Expense(db.Model):
             "description": self.description,
             "date": self.date.strftime("%Y-%m-%d"),
         }
+
+    def __repr__(self):
+        return f"<Expense {self.id}, {self.category}, {self.amount}>"

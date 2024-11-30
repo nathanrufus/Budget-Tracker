@@ -1,5 +1,11 @@
 from flask import Blueprint
-from budgets.controllers import budget_blueprint
+from flask_restful import Api
+from .controllers import BudgetListAPI, BudgetAPI
 
-def register_budget_blueprint(app):
-    app.register_blueprint(budget_blueprint, url_prefix="/api/budgets")
+# Initialize the blueprint
+budgets_bp = Blueprint('budgets', __name__)
+api = Api(budgets_bp)
+
+# Register the resources with their endpoints
+api.add_resource(BudgetListAPI, '/budgets')
+api.add_resource(BudgetAPI, '/budgets/<int:budget_id>')
