@@ -25,4 +25,4 @@ def post(self):
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
-    return outputss
+    return output
