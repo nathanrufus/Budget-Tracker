@@ -23,13 +23,21 @@ def create_app():
     migrate.init_app(app,db)
 
     from app.auth import auth_bp
+    from app.expenses import expenses_bp
+    from app.budgets import budgets_bp
     from app.goals import goals_bp
-    from app.notification import notifications_bp
-
+    from app.reports import reports_bp
+    from app.notifications import notifications_bp
+    from app.monthly_summaries import monthly_summaries_bp
+    
+    # Register other blueprints as needed
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(expenses_bp, url_prefix='/api')
+    app.register_blueprint(budgets_bp, url_prefix='/api')
     app.register_blueprint(goals_bp, url_prefix='/api')
+    app.register_blueprint(reports_bp, url_prefix='/api')
     app.register_blueprint(notifications_bp, url_prefix='/api')
-
+    app.register_blueprint(monthly_summaries_bp, url_prefix='/api')
 
 
 
