@@ -1,7 +1,7 @@
 const Access = () => {
   return (
     <div className="container mx-auto mt-[160px]">
-      <h2 className="font-Allura text-[60px] text-[#343333] text-center">
+      <h2 className="font-allura text-[60px] text-center">
         Sign Up for Early Access
       </h2>
       <form className="flex flex-col items-center mt-10">
