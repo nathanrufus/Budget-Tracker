@@ -11,9 +11,9 @@ function App() {
   return (
     <>
     <Navbar/>
-    {/* <Home/>
+    <Home/>
     <Services/>
-    <Testimonials/>
+    {/* <Testimonials/>
     <Access/>
     <Contact/>
     <Footer/> */}
