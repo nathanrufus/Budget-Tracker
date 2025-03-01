@@ -5,9 +5,9 @@ function Home() {
   return (
     <div className="h-screen flex flex-col lg:flex-row items-center justify-center bg-gradient-to-r from-pink-300 via-yellow-200 to-blue-300 px-4 lg:px-16">
       {/* Left Side - Text Content */}
-      <div className="max-w-xl w-full space-y-6 text-center lg:text-left">
+      <div className="max-w-xl w-full space-y-6 text-center lg:text-left ">
         {/* Main Title */}
-        <h1 className="text-4xl sm:text-5xl font-serif font-bold text-gray-800 leading-tight">
+        <h1 className="text-4xl sm:text-5xl font-serif font-bold text-gray-800 leading-tight ">
           <span className="block">Take Control</span>
           <strong className="block">of Your</strong>
           <strong className="block">Finances</strong>
