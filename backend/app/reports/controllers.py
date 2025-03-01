@@ -1,52 +1,28 @@
-
-from flask import jsonify, make_response
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.expenses.models import Expense
+# expenses - total expenses, budget - amount, variance
 from app.budgets.models import Budget
-from datetime import datetime
+from app.expense.models import Expense
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import jsonify
+import StringIO
 import csv
-import io
+from flask import make_response
 
-@jwt_required()
-def generate_summary():
-    """Generate a summary of expenses and budgets for the authenticated user."""
+@jwt_required
+def func_summary():
     user_id = get_jwt_identity()
-    
-    # Fetch user's expenses and budgets
-    expenses = Expense.query.filter_by(user_id=user_id).all()
-    budgets = Budget.query.filter_by(user_id=user_id).all()
-
-    # Calculate total expenses and total budgets
-    total_expenses = sum(float(expense.amount) for expense in expenses)
-    total_budgets = sum(float(budget.amount) for budget in budgets)
-    remaining_budget = total_budgets - total_expenses
-
-    # Create a summary response
-    summary = {
-        "total_expenses": total_expenses,
-        "total_budgets": total_budgets,
-        "remaining_budget": remaining_budget
-    }
+    expense = Expense.query.filter_by(user_id = user_id).all()
+    budgets = Budget.query.filter_by(user_id = user_id).all()
+    sum_total_expense = sum(float(exp.amount) for exp in expense if exp is not None) 
+    sum_total_budget = sum(float(budg.amount) for budg in budgets if budg is not None) 
+    remainder_budget = sum_total_budget - sum_total_expense
+    summary = {"total_expense": sum_total_expense, "total_budgets": sum_total_budget , "remainder_budget": remainder_budget}
     return jsonify(summary)
 
-@jwt_required()
-def export_csv():
-    """Export the user's expenses to a CSV file."""
-    user_id = get_jwt_identity()
-    expenses = Expense.query.filter_by(user_id=user_id).all()
-
-    # Create a CSV in memory
-    output = io.StringIO()
-    writer = csv.writer(output)
-    writer.writerow(['ID', 'Amount', 'Category', 'Date', 'Description'])
-
-    for expense in expenses:
-        writer.writerow([expense.id, float(expense.amount), expense.category, expense.date, expense.description])
-
-    output.seek(0)
-
-    # Generate a response with the CSV data
-    response = make_response(output.getvalue())
-    response.headers["Content-Disposition"] = "attachment; filename=expenses.csv"
-    response.headers["Content-type"] = "text/csv"
-    return response
+def post(self):
+    si = StringIO.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(csvList)
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
