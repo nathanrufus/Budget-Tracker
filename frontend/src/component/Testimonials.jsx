@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-// Inline PrevArrow Component
+function Testimonials() {// Inline PrevArrow Component
 const PrevArrow = (props) => {
   const { className, onClick } = props;
   return (
@@ -69,5 +69,10 @@ const Testimonial = () => {
     </div>
   );
 };
+}
 
-export default Testimonial;
+export default Testimonials;
+
+
+
+

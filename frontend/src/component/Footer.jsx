@@ -1,4 +1,8 @@
-const Footer = () => {
+
+
+import React from "react";
+
+function Footer() {
   return (
     <footer className="bg-[#F7FAFD] py-10">
       <div className="container mx-auto text-center">
@@ -17,5 +21,6 @@ const Footer = () => {
     </footer>
   );
 };
+
 
 export default Footer;

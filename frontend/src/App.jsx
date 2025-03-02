@@ -1,24 +1,24 @@
 import React from "react";
 import Navbar from "./component/Navbar";
-import Home from "./component/Home";
-import Services from "./component/Services";
-import Testimonials from "./component/Testimonials";
-import Access from "./component/Access";
-import Contact from "./component/Contact";
-import Footer from "./component/Footer";
+import Dashboard from "./component/Dashboard";
+import Signup from "./component/Signup";
+import Login from "./component/Login";
+import { Routes, Route } from "react-router-dom"
+
 
 function App() {
   return (
-    <>
-    <Navbar/>
-    <Home/>
-    <Services/>
-    <Testimonials/>
-    <Access/>
-    <Contact/>
-    <Footer/>
-    </>
-  );
+    <div >
+      <Navbar />
+      <div className="main-content">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Login />} />
+        </Routes>
+      </div>
+    </div>
+    );
 }
 
 export default App;
