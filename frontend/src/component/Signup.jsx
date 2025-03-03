@@ -10,7 +10,7 @@ function Signup() {
         <input placeholder="password" type="password" required className="w-full p-3 border rounded mb-4 focus:outline-none "/>
         <button className=" w-full py-3 bg-purple-600 text-white cursor-pointer rounded hover:bg-blue-600 transition-all duration-700" type="submit">Sign Up</button>
       </form>
-      <p className=" mt-4 text-sm">Already have an account ? <a href="/login" className=" text-purple-600">Sign In</a></p>
+      <p className=" mt-4 text-sm text-center">Already have an account ? <a href="/signin" className=" text-purple-600">Sign In</a></p>
      </div>
     </div>
   );
