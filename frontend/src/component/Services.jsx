@@ -4,13 +4,13 @@ import Display from "./assets/display.webp"
 function Services() {
   return (
     <div className="py-16 px-8 bg-white">
-      {/* Heading Section */}
+    
       <div className="text-center mb-16">
         <h1 className="text-4xl font-serif font-bold text-gray-800">Our Services</h1>
         <p className="text-lg text-gray-600 mt-2">Welcome to Our Services Page</p>
-        {/* Feature Tabs */}
+      
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        {/* Expense Tracking Card */}
+    
         <div className="bg-white shadow-md rounded-lg p-6 hover:bg-purple-600 hover:text-white transition group">
           <h3 className="text-lg font-bold mb-2 group-hover:text-white">Expense Tracking</h3>
           <p className="text-sm text-gray-600 group-hover:text-white">
@@ -18,7 +18,7 @@ function Services() {
           </p>
         </div>
 
-        {/* Budget Management Card */}
+  
         <div className="bg-purple-600 text-white shadow-md rounded-lg p-6 hover:scale-105 transition group">
           <h3 className="text-lg font-bold mb-2">Budget Management</h3>
           <p className="text-sm">
@@ -26,7 +26,7 @@ function Services() {
           </p>
         </div>
 
-        {/* Goal Setting Card */}
+      
         <div className="bg-white shadow-md rounded-lg p-6 hover:bg-purple-600 hover:text-white transition group">
           <h3 className="text-lg font-bold mb-2 group-hover:text-white">Goal Setting</h3>
           <p className="text-sm text-gray-600 group-hover:text-white">
@@ -34,7 +34,7 @@ function Services() {
           </p>
         </div>
 
-        {/* Reports & Trends Card */}
+   
         <div className="bg-white shadow-md rounded-lg p-6 hover:bg-purple-600 hover:text-white transition group">
           <h3 className="text-lg font-bold mb-2 group-hover:text-white">Reports & Trends</h3>
           <p className="text-sm text-gray-600 group-hover:text-white">
@@ -42,7 +42,7 @@ function Services() {
           </p>
         </div>
 
-        {/* Notifications Card */}
+   
         <div className="bg-white shadow-md rounded-lg p-6 hover:bg-purple-600 hover:text-white transition group">
           <h3 className="text-lg font-bold mb-2 group-hover:text-white">Notifications</h3>
           <p className="text-sm text-gray-600 group-hover:text-white">
@@ -53,9 +53,9 @@ function Services() {
 
       </div>
 
-      {/* Main Content Section */}
+     
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-gray-100 shadow-lg ">
-        {/* Left Side - Text Content */}
+       
         <div className="space-y-6  p-10">
           <h2 className="text-2xl font-bold text-gray-800">
             Our Users Save More and Stress Less:
@@ -79,7 +79,7 @@ function Services() {
           </div>
         </div>
 
-        {/* Right Side - Image and Statistics */}
+       
         <div className="flex flex-row items-center justify-center">
           {/* Statistics Section */}
           <div className="flex flex-col ">
@@ -94,7 +94,6 @@ function Services() {
               <p className="text-sm text-gray-500 mt-2">Achieve goals faster.</p>
             </div>
           </div>
-          {/* Image */}
           <div cl>
             <img
             src={Display} 

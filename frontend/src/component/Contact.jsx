@@ -4,11 +4,7 @@ const Contact = () => {
   return (
     <div className="relative">
       
-      <img
-        className="absolute -left-12 -bottom-5 -z-0"
-        src="/assets/svgs/call_action_form_pattern.svg"
-        alt="Background pattern"
-      />
+      
 
       <div className="container mx-auto px-[80px] mt-[100px] pb-20">
         <div className="w-full grid grid-cols-10 gap-x-10">

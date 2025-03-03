@@ -2,6 +2,8 @@ import React from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import Adam from "./assets/Adam.png" 
+import Touch from "./assets/screen.png"
 
 // Inline PrevArrow Component
 const PrevArrow = (props) => {
@@ -49,8 +51,9 @@ const Testimonial = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-[14px]">
                     <div className="w-[50px] h-[50px] bg-gray-300 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                      A
+                      <img src={Adam} alt="" />
                     </div>
+                    
                     <div>
                       <h4 className='font-Allura text-[#343333] text-[16px] leading-[22px]'>Adom Shafi</h4>
                       <p className='font-Amatic_SC text-[14px] leading-[22px] text-[#6D6D6D]'>UI/UX Designer</p>

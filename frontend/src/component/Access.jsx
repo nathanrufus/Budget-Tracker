@@ -1,4 +1,5 @@
 import React from 'react';
+import Touch from './assets/screen.png'
 
 const Access = () => {
   return (
@@ -29,12 +30,12 @@ const Access = () => {
           </div>
           <div className="col-span-1 relative">
             <img
-              src="/assets/svgs/in_touch.svg"
+              src=" "
               alt="In Touch"
               className="absolute top-0 right-0 mt-[20px] mr-[20px]"
             />
             <img
-              src="/assets/svgs/subscribe_image.svg"
+              src=""
               alt=""
               className="absolute bottom-0 -right-[250px]"
             />
