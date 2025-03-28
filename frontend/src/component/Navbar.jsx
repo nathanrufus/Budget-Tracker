@@ -13,7 +13,7 @@ function Navbar() {
   ];
 
   return (
-    <nav className="bg-blue-100 p-4 fixed top-0 left-0 w-full z-50">
+    <nav className="bg-blue-100 p-4 fixed top-0 left-0 right-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <h1 className="text-2xl font-serif font-extrabold text-gray-800 tracking-wider italic">

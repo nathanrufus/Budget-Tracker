@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+
 
 
 # import os
@@ -14,6 +16,7 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     # app.config['SQSignupApiLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///budget_tracker.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -24,21 +27,19 @@ def create_app():
     migrate.init_app(app,db)
 
     from app.auth import auth_bp
-    from app.expenses import expenses_bp
+    # from app.expenses import expenses_bp
     from app.budgets import budgets_bp
     from app.goals import goals_bp
-    from app.notification import notifications_bp
+    # from app.notification import notifications_bp
     from app.expense import expense_bp
-    from app.budgets import budgets_bp 
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(expenses_bp, url_prefix='/api')
+    # app.register_blueprint(expenses_bp, url_prefix='/api')
     app.register_blueprint(budgets_bp, url_prefix='/api')
     app.register_blueprint(goals_bp, url_prefix='/api')
-    app.register_blueprint(reports_bp, url_prefix='/api')
-    app.register_blueprint(notifications_bp, url_prefix='/api')
+    # app.register_blueprint(reports_bp, url_prefix='/api')
+    # app.register_blueprint(notifications_bp, url_prefix='/api')
     app.register_blueprint(expense_bp, url_prefix='/api')
-    app.register_blueprint(budgets_bp, url_prefix='/api')
     
 
     return app
