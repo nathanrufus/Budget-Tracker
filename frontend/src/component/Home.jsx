@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import Homedisp from "./assets/home.webp";
 
 function Home() {
