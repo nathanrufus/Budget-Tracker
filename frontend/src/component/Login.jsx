@@ -12,7 +12,7 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -24,7 +24,7 @@ function Login() {
 
       if (response.ok) {
         localStorage.setItem("token", data.token); // caching?
-        window.location.href = "/dashboard"; // or any other page
+        window.location.href = "/userdashboard"; // or any other page
       } else {
         setError(data.message || "Login failed. Please try again.");
       }
